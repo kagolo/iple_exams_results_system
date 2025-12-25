@@ -183,7 +183,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join('/home/iplexvtj/public_html/static/')
+STATIC_ROOT = os.path.join('/home/iplexvtj/public_html/static/css')
 
 # If you have extra static files (not in app 'static' folders)
 # STATICFILES_DIRS = [
