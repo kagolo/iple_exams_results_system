@@ -6,6 +6,12 @@ from django.contrib.auth.models import User,auth
 from .models import *
 from .homepage_selector import(get_all_about_us, get_about_us, get_schedules,get_schedule, get_our_partners,get_our_partner)
 from .schools_selector import(get_schools,get_school)
+from .student_selector import(get_students, get_student)
+from .passslip_selector import(get_students,get_student, get_student_in_students, get_results,get_result, get_subjects,get_subject)
+
+from .form import(ContactForm)
+
+from .filters import(School_filter, Student_filter)
 
 
 # Create your views here.
@@ -58,4 +64,48 @@ def manage_single_school(request, school_id):
         
     }
     return render(request, 'resultsapp/school.html', context)
+
+# STUDENTS PAGE
+def manage_student_in_students(request):
+
+    get_all_students = get_students()
+
+    get_all_students_filter = Student_filter(request.GET, queryset=get_all_students)
+    
+    context={
+        "get_all_students_filter":get_all_students_filter,
+        
+    }
+    return render(request, 'resultsapp/students.html', context)
    
+   # ABOUT US
+
+def manage_about_us(request):
+
+    get_all_aboutus = get_all_about_us()
+    context={
+        "get_all_aboutus":get_all_aboutus,
+    }
+    return render(request, 'resultsapp/about_us.html', context)
+
+# contact_us form
+
+def Manage_contact_us(request):
+    massege_form = ContactForm()
+    if request.method=="POST":
+        massege_form = ContactForm(request.POST, request.FILES)
+        if massege_form.is_valid():
+            massege_form.save()
+            user=massege_form.cleaned_data.get('user_name')
+            messages.success(request, 'Thanks alot, your message is successfully sent!')
+            return redirect("iple")
+        else:
+            messages.warning(request, 'Operation Not Successfull')
+            return redirect("iple")
+
+    context={
+        "massege_form":massege_form
+    }
+    return render(request, "index.html",context)  
+
+
