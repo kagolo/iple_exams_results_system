@@ -182,4 +182,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join('/home/iplexvtj/public_html/static/')
+
+# If you have extra static files (not in app 'static' folders)
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'mystatic'),
+# ]
+
+# For media files (user uploads)
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join('/home/yourusername/public_html/media/')
+
+
