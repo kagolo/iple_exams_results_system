@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,67 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'resultsapp',
 ]
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "bg-primary text-white",
+    "accent": "accent-primary",
+    "dark_mode_theme": None,
+    "sidebar_nav_small_text": False,
+    "sidebar_colour": "bg-dark",
+    "sidebar_nav_active_text": True,
+    "sidebar_nav_active_bg": True,
+    "sidebar_nav_flat_style": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_subtle_hover": False,
+    "sidebar_nav_hover_colour": "bg-primary",
+    "show_ui_builder": True,
+}
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "IPLE Examination System",
+    "site_header": "IPLE Admin",
+    "site_brand": "IPLE Admin",
+    "welcome_sign": "Welcome to IPLE Examination Portal",
+
+    "icons": {
+        "resultsapp.User": "fas fa-school",
+        "resultsapp.School": "fas fa-school",
+        "resultsapp.SchoolAdministrator": "fas fa-users",
+        "resultsapp.About_us": "fas fa-users",
+        "resultsapp.Schedule": "fas fa-calendar",
+        "resultsapp.Contact_us": "fas fa-message",
+        "resultsapp.Our_partners": "fas fa-person",
+        "resultsapp.Carousel": "fas fa-circle",
+        "resultsapp.Student": "fas fa-user-graduate",
+        "resultsapp.AcademicPeriod": "fas fa-calendar",
+        "resultsapp.GradingStructure": "fas fa-chart-line",
+        "resultsapp.Result": "fas fa-list-ol",
+        "auth.Group": "fas fa-users-cog",
+        "auth.User": "fas fa-user",
+    },
+
+    "default_icon_parents": "fas fa-folder",
+    "default_icon_children": "fas fa-circle",
+    
+     "topmenu_links": [
+        {"name": "Home",  "url": "/admin", "permissions": ["auth.view_user"]},
+        {"name": "View Site", "url":'iple'},
+        {"model": "resultsapp.Student"},
+        {"app": "resultsapp"},
+    ],
+
+    "hide_apps": ["sessions"],        # hide entire app
+    "hide_models": ["auth.Group"],    # hide specific model
+    "order_with_respect_to": ["resultsapp", "auth"],  # control order
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

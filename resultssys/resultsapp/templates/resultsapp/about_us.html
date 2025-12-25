@@ -1,0 +1,28 @@
+{% extends 'resultsapp/main.html' %}
+{% load static %}
+
+
+{% block content %}
+<section class="about py-lg-4 py-md-3 py-sm-3 py-3" id="about">
+         {% for aboutus in get_all_aboutus %}
+         <div class="container-fluid py-lg-5 py-md-5 py-sm-4 py-3">
+            <div class="title-sub text-left mb-lg-5 mb-md-4 mb-sm-4 mb-3">
+               <h3 class="title mb-md-4 mb-sm-3 mb-3">About Link Of Islamic Schools In Uganda</h3>
+               <p>{{aboutus.content }}</p>
+            </div>
+            <div class="row abt-colm pb-lg-4 pb-md-3 pb-3">
+               <div class="col-lg-5 agile-info-img">
+                  <img src="{% static 'images/About_us1.jpg' %}" class="img-fluid" alt="">         
+               </div>
+               <div class="col-lg-5 agile-abt-info about-grid">
+                  <div class="info-sub-w3">
+                     <h5>{{aboutus.content_2 }}</h5>
+                  </div>
+               </div>
+            </div> 
+            <p>{{aboutus.content_3 }}</p>       
+         </div>
+         {% endfor %}
+</section>
+
+{% endblock content %}

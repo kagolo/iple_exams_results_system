@@ -1,0 +1,63 @@
+
+
+{% extends 'resultsapp/main.html' %}
+{% load static %}
+<!-- {% load crispy_forms_tags %}
+{% load widget_tweaks %} -->
+
+
+
+
+{% block content %}
+<br>
+<center>
+  <h2>Islamic Primary Leaving Examination (IPLE)</h2>
+  <br>
+  <h2>Results For All Students</h2>
+  <p>Please search and click on your selected student from the list below;</p> 
+    </center> 
+  <br>
+  <form method="get">	
+    {% for field in  get_all_students_filter.form.visible_fields %}
+     <div class="form-group">
+     {% render_field get_all_students_filter.form.index_number class="form-control" placeholder="Enter Student Index" %}
+          {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+     <!-- <input class="form-control" id="myInput" type="text" placeholder="Search.."> -->
+     </div>
+     {% endfor %}
+
+     <div class="form-group">
+      <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span> Search
+      </button>
+      
+      </div>
+  </form>
+    
+<table class="table table-dark table-hover">
+  <thead>
+  <tr>
+    <th>Index Number</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>School</th>
+    <th>Acedemic Year</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for student in get_all_students_filter.qs %}
+  <tr>
+    <td><a href="{% url 'pdf' student.id %}">{{ student.index_number }}</a></td>
+    <td><a href="{% url 'pdf' student.id %}">{{ student.full_name }}</a></td>
+    <td><a href="{% url 'pdf' student.id %}">{{ student.gender }}</a></td>
+    <td><a href="{% url 'passslip' student.id %}">{{ student.school.name }}</a></td>
+    <td><a href="{% url 'passslip' student.id %}">{{ student.year }}</a></td>
+  </tr>
+    {% endfor %}
+  </tbody>
+</table>
+   
+
+ {% endblock content %} 

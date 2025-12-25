@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+        body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+        /* body { font-family: "Arial"; padding: 30px; } */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        td, th { border: 1px solid #000; padding: 8px; }
+        h2 { text-align: center; }
+
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #00ae57;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #00ae57;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+    </style>
+</head>
+<body>
+<div class="container">
+  <br>
+  <div class='wrapper'>
+            <div class='header'>
+              <div class='title'>
+                <h2>UGANDA MUSLIM SUPREME COUNCIL</h2>
+                <h2>Islamic Primary Leaving Examination (IPLE) - Result Slip</h2>
+                <hr class='hrItem' />
+              </div>
+            </div>
+        <div>
+  
+  <br>
+  {% for get_single_school in get_single_school.student_set.all %}
+ <div class='details'>
+  <!-- <p style="float: right;"><img src="{{ get_single_school.imageURL }}" alt=""/></p> -->
+  <p><strong>Name:</strong>   {{ get_single_school.full_name }}</p>
+  <p><strong>Index No:</strong>  {{ get_single_school.index_number }}</p>
+  <p><strong>School:</strong>   {{ get_single_school.school.name }}</p>
+  <p><strong>Year:</strong>    {{ get_single_school.year }}</p>
+  </div>   
+  {% endfor %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Quran</th>
+        <th>Fighu</th>
+        <th>Tarbia</th>
+        <th>Lugha</th>
+        <th>Total</th>
+        <th>Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for get_single_school in get_single_school.student_set.all %}
+      <tr>
+        <td>{{ get_single_school.quran_grade }}</td>
+        <td>{{ get_single_school.fighu_grade}}</td>
+        <td>{{ get_single_school.tarbia_grade }}</td>
+        <td>{{ get_single_school.lugha_grade }}</td>
+        <td>{{ get_single_school.get_total }}</td>
+        <td>{{ get_single_school.division }}</td>
+      </tr>
+      {% endfor %}
+       
+    </tbody>
+  </table>
+
+<!-- <p><strong>Total:</strong> {{ get_count }}</p>
+<p><strong>Division:</strong> {{ get_single_school.student.division }}</p> -->
+
+</div>
+
+</body>
+</html>
