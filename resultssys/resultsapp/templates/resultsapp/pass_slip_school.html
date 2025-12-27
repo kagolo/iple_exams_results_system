@@ -75,7 +75,7 @@
     </tr>
     </thead>
     <tbody>
-       
+        {% for get_single_school in get_single_school.student_set.all %}
       <tr>
         <td>{{ get_single_school.quran_grade }}</td>
         <td>{{ get_single_school.fighu_grade}}</td>
@@ -84,7 +84,7 @@
         <td>{{ get_single_school.get_total }}</td>
         <td>{{ get_single_school.division }}</td>
       </tr>
-    
+      {% endfor %}
        
     </tbody>
   </table>
