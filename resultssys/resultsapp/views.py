@@ -3,11 +3,11 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 
-from django.http import HttpResponse
-from django.views.generic import View
+# from django.http import HttpResponse
+# from django.views.generic import View
 
-from django.template.loader import get_template
-from .utils import render_to_pdf #created in step 4
+# from django.template.loader import get_template
+# from .utils import render_to_pdf #created in step 4
 
 
 from .models import *
@@ -115,48 +115,48 @@ def Manage_contact_us(request):
     }
     return render(request, "index.html",context)  
 
-# PASSSLIP PAGE
-class manage_passslip(View):
-    def get(self, request, school_id, *args, **kwargs):
-        template = get_template('resultsapp/pass_slip_school.html')
-        get_single_school = get_school(school_id)
-        context = {
-            "get_single_school": get_single_school,
-        }
-        html = template.render(context)
-        pdf = render_to_pdf('resultsapp/pass_slip_school.html', context)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "Results_%s.pdf" %("12341231")
-            content = "inline; filename='%s'" %(filename)
-            download = request.GET.get("download")
-            if download:
-                content = "attachment; filename='%s'" %(filename)
-            response['Content-Disposition'] = content
-            return response
-        return HttpResponse("Not found")
+# # PASSSLIP PAGE
+# class manage_passslip(View):
+#     def get(self, request, school_id, *args, **kwargs):
+#         template = get_template('resultsapp/pass_slip_school.html')
+#         get_single_school = get_school(school_id)
+#         context = {
+#             "get_single_school": get_single_school,
+#         }
+#         html = template.render(context)
+#         pdf = render_to_pdf('resultsapp/pass_slip_school.html', context)
+#         if pdf:
+#             response = HttpResponse(pdf, content_type='application/pdf')
+#             filename = "Results_%s.pdf" %("12341231")
+#             content = "inline; filename='%s'" %(filename)
+#             download = request.GET.get("download")
+#             if download:
+#                 content = "attachment; filename='%s'" %(filename)
+#             response['Content-Disposition'] = content
+#             return response
+#         return HttpResponse("Not found")
 
-# generate STUDENT pdf file Function
+# # generate STUDENT pdf file Function
 
-class GeneratePDF(View):
-    def get(self, request, student_id, *args, **kwargs):
-        template = get_template('resultsapp/pass_slip.html')
-        get_single_school = get_student(student_id)
-        context = {
-            "get_single_school": get_single_school,
-        }
-        html = template.render(context)
-        pdf = render_to_pdf('resultsapp/pass_slip.html', context)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "Results_%s.pdf" %("12341231")
-            content = "inline; filename='%s'" %(filename)
-            download = request.GET.get("download")
-            if download:
-                content = "attachment; filename='%s'" %(filename)
-            response['Content-Disposition'] = content
-            return response
-        return HttpResponse("Not found")
+# class GeneratePDF(View):
+#     def get(self, request, student_id, *args, **kwargs):
+#         template = get_template('resultsapp/pass_slip.html')
+#         get_single_school = get_student(student_id)
+#         context = {
+#             "get_single_school": get_single_school,
+#         }
+#         html = template.render(context)
+#         pdf = render_to_pdf('resultsapp/pass_slip.html', context)
+#         if pdf:
+#             response = HttpResponse(pdf, content_type='application/pdf')
+#             filename = "Results_%s.pdf" %("12341231")
+#             content = "inline; filename='%s'" %(filename)
+#             download = request.GET.get("download")
+#             if download:
+#                 content = "attachment; filename='%s'" %(filename)
+#             response['Content-Disposition'] = content
+#             return response
+#         return HttpResponse("Not found")
 
 
 
