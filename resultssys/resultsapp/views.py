@@ -3,6 +3,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 
+
+from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.admin.views.decorators import staff_member_required
+
 # from django.http import HttpResponse
 # from django.views.generic import View
 
@@ -29,12 +33,18 @@ def manage_iple(request):
     get_single_schedules = get_schedules()
     get_sch_list = get_schools()
     get_all_partners = get_our_partners()
+    total_num_students = Student.objects.count()
+    total_num_schools = School.objects.count()
+    first_grades = Student.objects.filter(division=1).count()
 
     context={
         "get_single_schedules":get_single_schedules,
         "get_sch_list":get_sch_list,
         "get_all_partners":get_all_partners,
         "get_all_aboutus":get_all_aboutus,
+        "total_num_students":total_num_students,
+        "total_num_schools":total_num_schools,
+        "first_grades":first_grades,
     }
     return render(request, 'resultsapp/index.html', context)
 
@@ -161,6 +171,8 @@ def Manage_contact_us(request):
 
 
 # Student
+
+# @staff_member_required(login_url='iple')
 def manage_single_student(request, student_id,):
 
     get_single_school = get_student(student_id)    
@@ -174,6 +186,8 @@ def manage_single_student(request, student_id,):
 
 
 # Single School Student
+
+# @staff_member_required(login_url='iple')
 def manage_single_school_student(request, student_id,):
 
     get_single_school = get_student(student_id)    
