@@ -160,3 +160,27 @@ def Manage_contact_us(request):
 
 
 
+# Student
+def manage_single_student(request, student_id,):
+
+    get_single_school = get_student(student_id)    
+
+    context={
+        "get_single_school":get_single_school,
+        
+    }
+    return render(request, 'resultsapp/pass_slip.html', context)
+
+
+
+# Single School Student
+def manage_single_school_student(request, student_id,):
+
+    get_single_school = get_student(student_id)    
+
+    context={
+        "get_single_school":get_single_school,
+        
+    }
+    return render(request, 'resultsapp/pass_slip_school.html', context)
+
