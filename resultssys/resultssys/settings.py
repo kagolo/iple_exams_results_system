@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b^@$r#4e=-4iz%hy#ulvf))c*aqfattvk-w4oiut42rb6kt*ly'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ipleuganda.com']
 # ALLOWED_HOSTS = []
@@ -72,6 +72,7 @@ JAZZMIN_SETTINGS = {
     "site_header": "IPLE Admin",
     "site_brand": "IPLE Admin",
     "welcome_sign": "Welcome to IPLE Examination Portal",
+    "copyright": "Usak Developer",
 
     "icons": {
         "resultsapp.User": "fas fa-school",
@@ -99,6 +100,7 @@ JAZZMIN_SETTINGS = {
         {"model": "resultsapp.Student"},
         {"app": "resultsapp"},
     ],
+    "show_ui_builder": True,
 
     "hide_apps": ["sessions"],        # hide entire app
     "hide_models": ["auth.Group"],    # hide specific model
