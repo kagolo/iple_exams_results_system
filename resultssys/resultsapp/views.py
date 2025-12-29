@@ -172,7 +172,7 @@ def Manage_contact_us(request):
 
 # Student
 
-# @staff_member_required(login_url='iple')
+@staff_member_required(login_url='iple')
 def manage_single_student(request, student_id,):
 
     get_single_school = get_student(student_id)    
@@ -187,7 +187,7 @@ def manage_single_student(request, student_id,):
 
 # Single School Student
 
-# @staff_member_required(login_url='iple')
+@staff_member_required(login_url='iple')
 def manage_single_school_student(request, student_id,):
 
     get_single_school = get_student(student_id)    

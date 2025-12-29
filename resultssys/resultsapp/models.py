@@ -68,6 +68,7 @@ class Student(models.Model):
     )
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
+    student_image = models.FileField(upload_to='pics')
     index_number = models.CharField(max_length=30, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER)
     year = models.IntegerField()
@@ -94,13 +95,13 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.index_number} - {self.full_name}"
     
-    # @property
-    # def imageURL(self):
-    #     try:
-    #         url = self.student_image.url
-    #     except:
-    #         url = ''
-    #     return url
+    @property
+    def imageURL(self):
+        try:
+            url = self.student_image.url
+        except:
+            url = ''
+        return url
 
 
 

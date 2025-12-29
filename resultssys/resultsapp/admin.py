@@ -141,6 +141,8 @@ class Our_partnerAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ("index_number", "full_name", "school", "gender", "year")
+    list_display = ("index_number", "full_name", "school", "gender", "year","quran_marks","quran_grade","fighu_marks","fighu_grade","lugha_marks","lugha_grade","tarbia_marks","tarbia_grade","division","student_image")
     search_fields = ("index_number", "full_name")
     list_filter = ("school", "gender", "year")
+
+    
