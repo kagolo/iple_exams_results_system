@@ -195,7 +195,8 @@ STATICFILES_DIRS = [
 ]
 
 # For media files (user uploads)
-MEDIA_URL = '/media/'
+MEDIA_URL = '/images/'
 # MEDIA_ROOT = os.path.join('/home/yourusername/public_html/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
 
 
