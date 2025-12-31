@@ -5,3 +5,6 @@ def get_schools():
 
 def get_school(school_id):
     return School.objects.get(pk=school_id)
+
+
+

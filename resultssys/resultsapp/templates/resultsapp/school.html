@@ -26,12 +26,12 @@
       </tr>
     </thead>
     <tbody>
-    {% for student in get_single_school.student_set.all %}
+    {% for student in get_single_school.student_set.all reversed %}
       <tr>
-        <td><a href="{% url 'passslip' student.id %}">{{ student.index_number }}</a></td>
-        <td><a href="{% url 'passslip' student.id %}">{{ student.full_name }}</a></td>
-        <td><a href="{% url 'passslip' student.id %}">{{ student.gender }}</a></td>
-        <td><a href="{% url 'passslip' student.id %}">{{ student.year }}</a></td>
+        <td><a href="{% url 'pdf' student.id %}">{{ student.index_number }}</a></td>
+        <td><a href="{% url 'pdf' student.id %}">{{ student.full_name }}</a></td>
+        <td><a href="{% url 'pdf' student.id %}">{{ student.gender }}</a></td>
+        <td><a href="{% url 'pdf' student.id %}">{{ student.year }}</a></td>
       </tr>
     {% endfor %}
     </tbody>

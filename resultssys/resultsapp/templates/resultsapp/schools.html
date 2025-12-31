@@ -66,7 +66,7 @@
       </tr>
     </thead>
     <tbody>
-    {% for r in get_all_schools_filter.qs %}
+    {% for r in get_all_schools_filter.qs reversed %}
       <tr>
         <td><a href="{% url 'school' r.id %}">{{ r.code }}</a></td>
         <td><a href="{% url 'school' r.id %}">{{ r.name }}</a></td>

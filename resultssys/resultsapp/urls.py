@@ -14,5 +14,5 @@ urlpatterns = [
     path('Students',views.manage_student_in_students,name="student"),
     path("Contact",views.Manage_contact_us,name="contact"),
     # path('pdf$/<int:student_id>/',GeneratePDF.as_view(), name="pdf"),
-    path('Student-passlip/<int:student_id>/',views.manage_single_student,name="pdf"),
+    path('Student-Pass-slip/<int:student_id>/',views.manage_single_student,name="pdf"),
 ]  

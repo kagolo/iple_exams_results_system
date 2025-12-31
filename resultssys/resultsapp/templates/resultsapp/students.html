@@ -47,7 +47,7 @@
   </tr>
   </thead>
   <tbody>
-    {% for student in get_all_students_filter.qs %}
+    {% for student in get_all_students_filter.qs reversed %}
   <tr>
     <td><a href="{% url 'pdf' student.id %}">{{ student.index_number }}</a></td>
     <td><a href="{% url 'pdf' student.id %}">{{ student.full_name }}</a></td>
