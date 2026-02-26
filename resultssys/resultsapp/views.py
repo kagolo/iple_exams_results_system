@@ -217,7 +217,7 @@ def some_pdf_view(request):
     # title
     
     c.setFont("Helvetica", 24)
-    c.drawString(100, 800, "Hello world How are you doing Masitula.")
+    c.drawString(100, 800, "Hello world How are you doing.")
     # Timestamp
     c.setFont("Helvetica", 12)
     c.drawString(100, 700, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
