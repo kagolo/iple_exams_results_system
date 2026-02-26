@@ -24,6 +24,13 @@ from .form import(ContactForm)
 
 from .filters import(School_filter, Student_filter)
 
+# creating lab report using canvas
+
+
+from django.http import FileResponse
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from datetime import datetime
 
 # Create your views here.
 
@@ -197,4 +204,32 @@ def manage_single_school_student(request, student_id,):
         
     }
     return render(request, 'resultsapp/pass_slip_school.html', context)
+
+
+# creating view for lab report using canvas
+
+def some_pdf_view(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['content-Disposition'] = 'attachment; filename="hello.pdf"'
+
+    c = canvas.Canvas(response) 
+    # title
+    
+    c.setFont("Helvetica", 24)
+    c.drawString(100, 800, "Hello world How are you doing Masitula.")
+    # Timestamp
+    c.setFont("Helvetica", 12)
+    c.drawString(100, 700, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    # Example text
+    c.setFont("Helvetica", 24)
+    c.drawString(100, 750, "This is second trial for many words.")
+
+    # Close the PDF object cleanly, and we're done.
+    c.showPage()
+    c.save()
+
+    return response
+
+
 

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 # from .views import GeneratePDF, manage_passslip
+# from .views import generate_pdf_report
 
 
 urlpatterns = [
@@ -15,4 +16,6 @@ urlpatterns = [
     path("Contact",views.Manage_contact_us,name="contact"),
     # path('pdf$/<int:student_id>/',GeneratePDF.as_view(), name="pdf"),
     path('Student-Pass-slip/<int:student_id>/',views.manage_single_student,name="pdf"),
+    # pandas labreport url
+    path('generate-pdf/',views.some_pdf_view, name='generate_pdf'),
 ]  
