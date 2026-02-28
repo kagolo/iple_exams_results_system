@@ -26,11 +26,15 @@ from .filters import(School_filter, Student_filter)
 
 # creating lab report using canvas
 
-
+import io
 from django.http import FileResponse
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from datetime import datetime
+from reportlab.lib.pagesizes import A4
+
+
+
 
 # Create your views here.
 
@@ -153,29 +157,35 @@ def Manage_contact_us(request):
 #             return response
 #         return HttpResponse("Not found")
 
-# # generate STUDENT pdf file Function
+# generate STUDENT pdf file Function
 
-# class GeneratePDF(View):
-#     def get(self, request, student_id, *args, **kwargs):
-#         template = get_template('resultsapp/pass_slip.html')
-#         get_single_school = get_student(student_id)
-#         context = {
-#             "get_single_school": get_single_school,
-#         }
-#         html = template.render(context)
-#         pdf = render_to_pdf('resultsapp/pass_slip.html', context)
-#         if pdf:
-#             response = HttpResponse(pdf, content_type='application/pdf')
-#             filename = "Results_%s.pdf" %("12341231")
-#             content = "inline; filename='%s'" %(filename)
-#             download = request.GET.get("download")
-#             if download:
-#                 content = "attachment; filename='%s'" %(filename)
-#             response['Content-Disposition'] = content
-#             return response
-#         return HttpResponse("Not found")
+def generate_pdf_report(request, student_id):
+    # 1. Fetch data from the database
+    try:
+        report_data = Student.objects.get(id=student_id)
+    except Student.DoesNotExist:
+        # Handle the case where the report is not found
+        return HttpResponse("Student not found", status=404)
+    
+    # 2. Create a file-like buffer to receive PDF data
+    buffer = io.BytesIO()
 
+    # 3. Create the PDF object, using the buffer as its "file"
+    p = canvas.Canvas(buffer, pagesize=A4)
 
+    # 4. Draw things on the PDF using the fetched data
+    p.drawString(100, 800, f"Student Index Number: {report_data.index_number}")
+    p.drawString(100, 780, f"Student Name: {report_data.full_name}")
+    p.drawString(100, 760, f"Student Gender: {report_data.gender}")
+
+    # 5. Close the PDF object cleanly
+    p.showPage()
+    p.save()
+
+    # 6. Get the value of the BytesIO buffer and create a FileResponse object
+    buffer.seek(0)
+    # The 'as_attachment=True' will prompt a download dialog
+    return FileResponse(buffer, as_attachment=True, filename=f"lab_report_{student_id}.pdf")
 
 # Student
 

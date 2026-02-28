@@ -18,4 +18,5 @@ urlpatterns = [
     path('Student-Pass-slip/<int:student_id>/',views.manage_single_student,name="pdf"),
     # pandas labreport url
     path('generate-pdf/',views.some_pdf_view, name='generate_pdf'),
+    path('generate-report/<int:student_id>/', views.generate_pdf_report, name='generate-pdf-report'),
 ]  
