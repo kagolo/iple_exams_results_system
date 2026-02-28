@@ -157,35 +157,38 @@ def Manage_contact_us(request):
 #             return response
 #         return HttpResponse("Not found")
 
+
+
 # generate STUDENT pdf file Function
-
-def generate_pdf_report(request, student_id):
-    # 1. Fetch data from the database
-    try:
-        report_data = Student.objects.get(id=student_id)
-    except Student.DoesNotExist:
-        # Handle the case where the report is not found
-        return HttpResponse("Student not found", status=404)
+# def generate_pdf_report(request, student_id):
+#     # 1. Fetch data from the database
+#     try:
+#         report_data = Student.objects.get(id=student_id)
+#     except Student.DoesNotExist:
+#         # Handle the case where the report is not found
+#         return HttpResponse("Student not found", status=404)
     
-    # 2. Create a file-like buffer to receive PDF data
-    buffer = io.BytesIO()
+#     # 2. Create a file-like buffer to receive PDF data
+#     buffer = io.BytesIO()
 
-    # 3. Create the PDF object, using the buffer as its "file"
-    p = canvas.Canvas(buffer, pagesize=A4)
+#     # 3. Create the PDF object, using the buffer as its "file"
+#     p = canvas.Canvas(buffer, pagesize=A4)
 
-    # 4. Draw things on the PDF using the fetched data
-    p.drawString(100, 800, f"Student Index Number: {report_data.index_number}")
-    p.drawString(100, 780, f"Student Name: {report_data.full_name}")
-    p.drawString(100, 760, f"Student Gender: {report_data.gender}")
+#     # 4. Draw things on the PDF using the fetched data
+#     p.drawString(100, 800, f"Student Index Number: {report_data.index_number}")
+#     p.drawString(100, 780, f"Student Name: {report_data.full_name}")
+#     p.drawString(100, 760, f"Student Gender: {report_data.gender}")
 
-    # 5. Close the PDF object cleanly
-    p.showPage()
-    p.save()
+#     # 5. Close the PDF object cleanly
+#     p.showPage()
+#     p.save()
 
-    # 6. Get the value of the BytesIO buffer and create a FileResponse object
-    buffer.seek(0)
-    # The 'as_attachment=True' will prompt a download dialog
-    return FileResponse(buffer, as_attachment=True, filename=f"lab_report_{student_id}.pdf")
+#     # 6. Get the value of the BytesIO buffer and create a FileResponse object
+#     buffer.seek(0)
+#     # The 'as_attachment=True' will prompt a download dialog
+#     return FileResponse(buffer, as_attachment=True, filename=f"lab_report_{student_id}.pdf")
+
+
 
 # Student
 
@@ -235,11 +238,43 @@ def some_pdf_view(request):
     c.setFont("Helvetica", 24)
     c.drawString(100, 750, "This is second trial for many words.")
 
-    # Close the PDF object cleanly, and we're done.
+    # 5. Close the PDF object cleanly
     c.showPage()
     c.save()
 
     return response
 
+# creating view for lab report Method 2 Final
 
+def generate_passslip_pdf(request, student_id):
 
+    response = HttpResponse(content_type='application/pdf')
+    response['content-Disposition'] = 'attachment; filename="student_passslip.pdf"'
+    # 1. Fetch data from the database
+    try:
+        report_data = Student.objects.get(id=student_id)
+    except Student.DoesNotExist:
+        # Handle the case where the report is not found
+        return HttpResponse("Student not found", status=404)
+    
+    # 3. Create the PDF object,
+    c = canvas.Canvas(response) 
+
+    # 4. Draw things on the PDF using the fetched data
+    # title
+    c.setFont("Helvetica", 24)
+    c.drawString(100, 800, f"Student Index Number: {report_data.index_number}")
+    c.drawString(100, 400, f"Student Name: {report_data.full_name}")
+    c.drawString(100, 300, f"Student Gender: {report_data.gender}")
+    
+    # Timestamp
+    c.setFont("Helvetica", 12)
+    c.drawString(100, 700, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Close the PDF object cleanly, and we're done.
+    c.showPage()
+    c.save()
+
+    # The 'as_attachment=True' will prompt a download dialog
+    return response
+    

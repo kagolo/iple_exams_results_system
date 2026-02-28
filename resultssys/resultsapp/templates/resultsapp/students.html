@@ -49,11 +49,11 @@
   <tbody>
     {% for student in get_all_students_filter.qs reversed %}
   <tr>
-    <td><a href="{% url 'generate-pdf-report' student.id %}">{{ student.index_number }}</a></td>
-    <td><a href="{% url 'generate-pdf-report' student.id %}">{{ student.full_name }}</a></td>
-    <td><a href="{% url 'generate-pdf-report' student.id %}">{{ student.gender }}</a></td>
-    <td><a href="{% url 'generate-pdf-report' student.id %}">{{ student.school.name }}</a></td>
-    <td><a href="{% url 'generate-pdf-report' student.id %}">{{ student.year }}</a></td>
+    <td><a href="{% url 'passslip_pdf' student.id %}">{{ student.index_number }}</a></td>
+    <td><a href="{% url 'passslip_pdf' student.id %}">{{ student.full_name }}</a></td>
+    <td><a href="{% url 'passslip_pdf' student.id %}">{{ student.gender }}</a></td>
+    <td><a href="{% url 'passslip_pdf' student.id %}">{{ student.school.name }}</a></td>
+    <td><a href="{% url 'passslip_pdf' student.id %}">{{ student.year }}</a></td>
   </tr>
     {% endfor %}
   </tbody>
