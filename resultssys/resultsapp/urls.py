@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 # from .views import GeneratePDF, manage_passslip
-# from .views import generate_pdf_report
 
 
 urlpatterns = [
