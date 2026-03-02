@@ -282,16 +282,7 @@ def some_pdf_view(request):
     c.save()
 
     return response
-
-# <div class='details'>
-#   <p style="float: right;"> <img src="{{ get_single_school.imageURL }}" alt=""/></p>
-#   <p><strong>Name:</strong>   {{ get_single_school.full_name }}</p>
-#   <p><strong>Index No:</strong>  {{ get_single_school.index_number }}</p>
-#   <p><strong>School:</strong>   {{ get_single_school.school.name }}</p>
-#   <p><strong>Year:</strong>    {{ get_single_school.year }}</p>
-#   </div>   
   
-
 
 # creating view for lab report Method 2 Final
 
