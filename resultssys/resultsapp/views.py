@@ -32,6 +32,9 @@ from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from datetime import datetime
 from reportlab.lib.pagesizes import A4
+from reportlab.platypus import Table, TableStyle
+from reportlab.lib import colors
+from reportlab.lib.units import inch
 
 
 
@@ -225,24 +228,70 @@ def some_pdf_view(request):
 
     response = HttpResponse(content_type='application/pdf')
     response['content-Disposition'] = 'attachment; filename="hello.pdf"'
-
+    
+    
+    # Create PDF
     c = canvas.Canvas(response) 
+    
+    data = [
+        ['Name', 'Age', 'Country'],
+        ['Alice', '25', 'USA'],
+        ['Bob', '30', 'Canada'],
+        ['Charlie', '40', 'Australia'],
+    ]
+    table = Table(data)
+    # Apply style to the table
+    # tuple (0, -1) > first column and last row
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+        ('GRID', (0, 0), (-1, -1), 2, colors.black),
+    ]))
+    # Calculate dimensions and draw
+    table.wrapOn(c, 500, 800)
+    table.drawOn(c, 50, 600) # (x, y) coordinates
+    
     # title
     
     c.setFont("Helvetica", 24)
     c.drawString(100, 800, "Hello world How are you doing.")
     # Timestamp
     c.setFont("Helvetica", 12)
-    c.drawString(100, 700, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    c.drawString(100, 300, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     # Example text
     c.setFont("Helvetica", 24)
-    c.drawString(100, 750, "This is second trial for many words.")
+    c.drawString(100, 200, "This is second trial for many words.")
+
+    # Draw Table on canvas
+    # c.setFont("Helvetica", 15)
+    # table.drawOn(c, 100, 100)
+
 
     # 5. Close the PDF object cleanly
     c.showPage()
     c.save()
 
     return response
+
+# <div class='details'>
+#   <p style="float: right;"> <img src="{{ get_single_school.imageURL }}" alt=""/></p>
+#   <p><strong>Name:</strong>   {{ get_single_school.full_name }}</p>
+#   <p><strong>Index No:</strong>  {{ get_single_school.index_number }}</p>
+#   <p><strong>School:</strong>   {{ get_single_school.school.name }}</p>
+#   <p><strong>Year:</strong>    {{ get_single_school.year }}</p>
+#   </div>   
+  
+
 
 # creating view for lab report Method 2 Final
 
@@ -253,23 +302,65 @@ def generate_passslip_pdf(request, student_id):
     # 1. Fetch data from the database
     try:
         report_data = Student.objects.get(id=student_id)
+        # Draw Table on canvas
+        data = [
+            ['Quran', 'Fighu', 'Lugha','Tarbia', 'Total', 'grade'],
+            [report_data.quran_grade, report_data.fighu_grade, report_data.lugha_grade, report_data.tarbia_grade, report_data.get_total, report_data.division]
+        ]
+        
+
     except Student.DoesNotExist:
         # Handle the case where the report is not found
         return HttpResponse("Student not found", status=404)
     
     # 3. Create the PDF object,
-    c = canvas.Canvas(response) 
+    c = canvas.Canvas(response, pagesize=A4)   
 
     # 4. Draw things on the PDF using the fetched data
     # title
-    c.setFont("Helvetica", 24)
-    c.drawString(100, 800, f"Student Index Number: {report_data.index_number}")
-    c.drawString(100, 400, f"Student Name: {report_data.full_name}")
-    c.drawString(100, 300, f"Student Gender: {report_data.gender}")
+    c.setFont("Helvetica-Bold", 24)
+    c.setFillColor("green")
+    c.drawString(100, 750, f"UGANDA MUSLIM SUPREME COUNCIL")
+    c.drawString(90, 700, f"Islamic Primary Leaving Examination (IPLE)")
+    c.drawString(200, 650, f"Results-Slip")
+
+    c.setFont("Helvetica", 15)
+    c.setFillColor("black")
+    c.drawString(100, 550, f"Student Name: {report_data.full_name}")
+    c.drawString(100, 530, f"Index Number: {report_data.index_number}")
+    c.drawString(100, 510, f"Gender: {report_data.gender}")
+    c.drawString(100, 490, f"School Name: {report_data.school.name }")
+    c.drawString(100, 470, f"Year: {report_data.year}")
+        
+    # Create and Style the Table
+    table = Table(data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.darkgreen),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+        ('GRID', (0, 0), (-1, -1), 2, colors.black),
+        
+    ]))
+    # Calculate dimensions and draw
+    table.wrapOn(c, 500, 800)
+    table.drawOn(c, 100, 350) # (x, y) coordinates
+
+
+    # Apply style to the table
+    # tuple (0, -1) > first column and last row
     
     # Timestamp
     c.setFont("Helvetica", 12)
-    c.drawString(100, 700, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    c.drawString(100, 200, f"Generated on:{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     # Close the PDF object cleanly, and we're done.
     c.showPage()
